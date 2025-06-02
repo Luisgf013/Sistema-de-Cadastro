@@ -1,4 +1,5 @@
-const apiUrl = 'http://localhost:3000/clientes';
+const apiUrl = 'https://9f0bcfbd-2ac7-44af-a918-179e573b3f8d-00-wcbk1zfkwnzn.spock.replit.dev/
+';
 
 const form = document.getElementById('formCliente');
 const listaClientes = document.getElementById('listaClientes');
