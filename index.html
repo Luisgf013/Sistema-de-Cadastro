@@ -1,12 +1,147 @@
 
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Sistema de Cadastro</title>
-  </head>
-  <body>
-    <h1>Olá, GitHub Pages está funcionando!</h1>
-    <p>Em breve, aqui será o sistema de cadastro completo.</p>
-  </body>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sistema de Cadastro</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      background: #f2f2f2;
+    }
+    h1 {
+      text-align: center;
+    }
+    form {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin: auto;
+    }
+    input, button {
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      text-align: left;
+    }
+    .actions button {
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Sistema de Cadastro de Clientes</h1>
+
+  <form id="clienteForm">
+    <input type="hidden" id="clienteId" />
+    <input type="text" id="nome" placeholder="Nome" required />
+    <input type="email" id="email" placeholder="E-mail" required />
+    <input type="text" id="telefone" placeholder="Telefone" required />
+    <input type="text" id="endereco" placeholder="Endereço" required />
+    <input type="text" id="cargo" placeholder="Cargo" required />
+    <button type="submit">Salvar</button>
+  </form>
+
+  <div style="max-width: 100%; overflow-x: auto;">
+    <table id="tabelaClientes">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Telefone</th>
+          <th>Endereço</th>
+          <th>Cargo</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    const API_URL = 'https://9f0bcfbd-2ac7-44af-a918-179e573b3f8d-00-wcbk1zfkwnzn.spock.replit.dev/clientes';
+
+    async function carregarClientes() {
+      const res = await fetch(API_URL);
+      const dados = await res.json();
+      const tbody = document.querySelector("#tabelaClientes tbody");
+      tbody.innerHTML = "";
+
+      dados.forEach(cliente => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${cliente.nome}</td>
+          <td>${cliente.email}</td>
+          <td>${cliente.telefone}</td>
+          <td>${cliente.endereco}</td>
+          <td>${cliente.cargo}</td>
+          <td class="actions">
+            <button onclick="editarCliente(${cliente.id})">Editar</button>
+            <button onclick="excluirCliente(${cliente.id})">Excluir</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.getElementById("clienteForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const id = document.getElementById("clienteId").value;
+      const cliente = {
+        nome: document.getElementById("nome").value,
+        email: document.getElementById("email").value,
+        telefone: document.getElementById("telefone").value,
+        endereco: document.getElementById("endereco").value,
+        cargo: document.getElementById("cargo").value,
+      };
+
+      const metodo = id ? "PUT" : "POST";
+      const url = id ? `${API_URL}/${id}` : API_URL;
+
+      await fetch(url, {
+        method: metodo,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(cliente)
+      });
+
+      this.reset();
+      carregarClientes();
+    });
+
+    async function editarCliente(id) {
+      const res = await fetch(`${API_URL}/${id}`);
+      const cliente = await res.json();
+      document.getElementById("clienteId").value = cliente.id;
+      document.getElementById("nome").value = cliente.nome;
+      document.getElementById("email").value = cliente.email;
+      document.getElementById("telefone").value = cliente.telefone;
+      document.getElementById("endereco").value = cliente.endereco;
+      document.getElementById("cargo").value = cliente.cargo;
+    }
+
+    async function excluirCliente(id) {
+      if (confirm("Tem certeza que deseja excluir este cliente?")) {
+        await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+        carregarClientes();
+      }
+    }
+
+    carregarClientes();
+  </script>
+</body>
 </html>
