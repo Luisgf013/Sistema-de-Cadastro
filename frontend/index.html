@@ -1,1 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sistema Básico de Cadastro</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Sistema Básico de Cadastro</h1>
+
+  <form id="formCliente">
+    <input type="hidden" id="clienteId" />
+    <label>Nome: <input type="text" id="nome" required /></label>
+    <label>Email: <input type="email" id="email" required /></label>
+    <label>Telefone: <input type="text" id="telefone" /></label>
+    <label>CPF: <input type="text" id="cpf" /></label>
+    <button type="submit">Salvar</button>
+    <button type="button" id="cancelarEdicao" style="display:none;">Cancelar</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr><th>Nome</th><th>Email</th><th>Telefone</th><th>CPF</th><th>Ações</th></tr>
+    </thead>
+    <tbody id="listaClientes"></tbody>
+  </table>
+
+  <script src="script.js"></script>
+</body>
+</html>
 
