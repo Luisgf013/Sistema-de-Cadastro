@@ -1,1 +1,42 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 2rem;
+  background-color: #f0f0f0;
+}
+
+h1 {
+  margin-bottom: 1rem;
+}
+
+form label {
+  display: block;
+  margin: 0.5rem 0;
+}
+
+input {
+  padding: 0.3rem;
+  margin-left: 0.5rem;
+}
+
+button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+  background: white;
+}
+
+th, td {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+button.editar, button.deletar {
+  margin-right: 0.5rem;
+}
 
