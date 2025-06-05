@@ -5,7 +5,9 @@ db.serialize(() => {
   db.run(`CREATE TABLE IF NOT EXISTS pessoas (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome TEXT NOT NULL,
-    email TEXT NOT NULL
+    email TEXT NOT NULL,
+    cargo TEXT NOT NULL,
+    endereco TEXT NOT NULL
   )`);
 });
 
