@@ -1,45 +1,18 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Sistema de Cadastro</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Cadastro de Usuários</h1>
-  <form id="cadastroForm">
-    <label>Nome:</label><br />
-    <input type="text" name="nome" required /><br />
-
-    <label>Email:</label><br />
-    <input type="email" name="email" required /><br />
-
-    <label>Telefone:</label><br />
-    <input type="text" name="telefone" /><br /><br />
-
+  <h1>Cadastro de Pessoas</h1>
+  <form id="cadastro-form">
+    <input type="text" id="nome" placeholder="Nome" required>
+    <input type="email" id="email" placeholder="Email" required>
     <button type="submit">Cadastrar</button>
   </form>
-
-  <p id="mensagem"></p>
-
-  <script>
-    const form = document.getElementById('cadastroForm');
-    const mensagem = document.getElementById('mensagem');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const dados = new FormData(form);
-      const body = new URLSearchParams(dados);
-
-      const resposta = await fetch('/cadastro', {
-        method: 'POST',
-        body
-      });
-
-      const texto = await resposta.text();
-      mensagem.textContent = texto;
-      form.reset();
-    });
-  </script>
+  <ul id="lista"></ul>
+  <script src="script.js"></script>
 </body>
 </html>
