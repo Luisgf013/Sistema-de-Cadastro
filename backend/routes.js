@@ -10,12 +10,16 @@ router.get('/pessoas', (req, res) => {
 });
 
 router.post('/pessoas', (req, res) => {
-  const { nome, email } = req.body;
-  if (!nome || !email) return res.status(400).json({ error: 'Nome e email obrigatórios.' });
+  const { nome, email, cargo, endereco } = req.body;
+  if (!nome || !email || !cargo || !endereco) {
+    return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
+  }
 
-  db.run('INSERT INTO pessoas (nome, email) VALUES (?, ?)', [nome, email], function(err) {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json({ id: this.lastID, nome, email });
+  db.run('INSERT INTO pessoas (nome, email, cargo, endereco) VALUES (?, ?, ?, ?)',
+    [nome, email, cargo, endereco],
+    function(err) {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json({ id: this.lastID, nome, email, cargo, endereco });
   });
 });
 
