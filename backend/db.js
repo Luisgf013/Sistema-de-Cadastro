@@ -1,14 +1,12 @@
-import sqlite3 from 'sqlite3';
-import fs from 'fs';
+const sqlite3 = require('sqlite3').verbose();
+const db = new sqlite3.Database('./cadastro.db');
 
-// Conecta ao banco (cria se não existir)
-const db = new sqlite3.Database('./clientes.db');
-
-// Lê e executa o schema para criar as tabelas
-const schema = fs.readFileSync('./schema.sql', 'utf8');
-db.exec(schema, (err) => {
-  if (err) console.error('Erro ao criar tabelas:', err.message);
-  else console.log('Tabelas criadas com sucesso.');
+db.serialize(() => {
+  db.run(`CREATE TABLE IF NOT EXISTS pessoas (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL,
+    email TEXT NOT NULL
+  )`);
 });
 
-export default db;
+module.exports = db;
