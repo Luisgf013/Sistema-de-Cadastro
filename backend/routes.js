@@ -15,11 +15,9 @@ router.post('/pessoas', (req, res) => {
     return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
   }
 
-  db.run('INSERT INTO pessoas (nome, email, cargo, endereco) VALUES (?, ?, ?, ?)',
-    [nome, email, cargo, endereco],
-    function(err) {
-      if (err) return res.status(500).json({ error: err.message });
-      res.json({ id: this.lastID, nome, email, cargo, endereco });
+  db.run('INSERT INTO pessoas (nome, email, cargo, endereco) VALUES (?, ?, ?, ?)', [nome, email, cargo, endereco], function(err) {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ id: this.lastID, nome, email, cargo, endereco });
   });
 });
 
