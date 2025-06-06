@@ -5,12 +5,12 @@ document.getElementById('cadastro-form').addEventListener('submit', async (e) =>
   const cargo = document.getElementById('cargo').value.trim();
   const endereco = document.getElementById('endereco').value.trim();
 
-  if (!nome || !email || !cargo || !endereco) {
-    alert("Todos os campos são obrigatórios.");
+  if (!nome || !email || !cargo || !endereco || !email.includes('@')) {
+    alert('Preencha todos os campos corretamente.');
     return;
   }
 
-  const res = await fetch('/api/pessoas', {
+  await fetch('/api/pessoas', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ nome, email, cargo, endereco })
@@ -25,11 +25,18 @@ async function carregarPessoas() {
   const pessoas = await res.json();
   const lista = document.getElementById('lista');
   lista.innerHTML = '';
+
   pessoas.forEach(pessoa => {
     const item = document.createElement('li');
-    item.textContent = `${pessoa.nome} - ${pessoa.email} - ${pessoa.cargo} - ${pessoa.endereco}`;
+    item.innerHTML = `${pessoa.nome} - ${pessoa.email} - ${pessoa.cargo} - ${pessoa.endereco}
+      <button onclick="removerPessoa(${pessoa.id})">Excluir</button>`;
     lista.appendChild(item);
   });
+}
+
+async function removerPessoa(id) {
+  await fetch(`/api/pessoas/${id}`, { method: 'DELETE' });
+  carregarPessoas();
 }
 
 carregarPessoas();
