@@ -6,8 +6,8 @@ db.serialize(() => {
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome TEXT NOT NULL,
     email TEXT NOT NULL,
-    cargo TEXT NOT NULL,
-    endereco TEXT NOT NULL
+    cargo TEXT,
+    endereco TEXT
   )`);
 });
 
